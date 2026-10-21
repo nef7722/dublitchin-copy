@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="yi" dir="rtl">
+<head>
+<meta name="dub-api" content=".">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מוסדות דאבליטשין | Dublitchin – The Dublitchiner Rebbe</title>
+<link rel="canonical" href="https://dublitchin.surge.sh/">
+<meta name="keywords" content="Dublitchin, Dublitchiner Rebbe, Dublitchiner, דאבליטשין, דאבליטשינער רבי, קימחא דאברהם, Kimcha D'Avraham, mosdos Dublitchin">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Mosdos Dublitchin – קימחא דאברהם דקהילה קדושה דאבליטשין","alternateName":["Dublitchin","Dublitchiner Rebbe","דאבליטשין"],"url":"https://dublitchin.surge.sh/","logo":"https://dublitchin.surge.sh/og.png"}</script>
+
+<meta name="description" content="מוסדות דאבליטשין — תחת נשיאות הרה״צ רבי אברהם קויפמאן שליט״א, דער דאבליטשינער רבי. תורה, יראת שמים און חסידות.">
+<meta property="og:title" content="מוסדות דאבליטשין">
+<meta property="og:description" content="תורה, יראת שמים און חסידות — פון דור צו דור">
+<meta name="theme-color" content="#0b1730">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="style.css?v=adm2">
+<link rel="preconnect" href="https://dublitchin.sites.tab.bot" crossorigin>
+<script>try{if(localStorage.getItem("dub-lang")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}(function(r){r.classList.add("dub-ld");setTimeout(function(){r.classList.remove("dub-ld")},1200)})(document.documentElement);</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#">
+      <img class="brand-crown" src="img/crown-sm.png" alt="" width="44" height="40">
+      <span class="brand-t" data-i="brand">מוסדות דאבליטשין</span>
+    </a>
+    <button class="lang-btn" id="langBtn" type="button" aria-label="Language / שפראך"><span class="l-yi">ייִדיש</span><span class="l-en">English</span></button>
+    <nav class="nav" aria-label="מעניו">
+      <a href="#about" data-i="n_about">וועגן אונז</a>
+      <a href="#rebbe" data-i="n_rebbe">דער רבי</a>
+      <a href="#vort" data-i="n_vort">דבר תורה</a>
+      <a href="#hanhala" data-i="n_hanhala">הנהלה</a>
+      <a href="#mosdos" data-i="n_mosdos">די מוסדות</a>
+      <a href="#gallery" data-i="n_gallery">גאלעריע</a>
+      
+      <a href="#dedications" data-i="n_dedic">נדבות</a>
+      <a href="#news" data-i="n_news">נייעס</a>
+      <a href="#ask" data-i="n_ask">שאלות</a>
+      <a href="#contact" data-i="n_contact">קאנטאקט</a>
+      <a class="nav-cta" href="#donate" data-i="n_cta">שטיצט</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="zm" id="zmanim" hidden aria-label="זמני היום">
+  <div class="wrap zm-in">
+    <div class="zm-head">
+      <span class="zm-k" data-i="zm_k">זמני היום</span>
+      <span class="zm-date"><span class="zm-day" id="zmDay"></span><span class="zm-sep" aria-hidden="true">·</span><span class="zm-heb" id="zmHeb"></span><span class="zm-psep zm-sep" aria-hidden="true">·</span><span class="zm-parsha" id="zmParsha"></span></span>
+      <span class="zm-loc" data-i="zm_loc">מאנסי, נ.י.</span>
+    </div>
+    <ul class="zm-list" id="zmList">
+      <li data-z="alos"><span class="zl" data-i="zm_alos">עלות השחר</span><bdi class="zt"></bdi></li>
+      <li data-z="netz"><span class="zl" data-i="zm_netz">הנץ החמה</span><bdi class="zt"></bdi></li>
+      <li data-z="shmaMga"><span class="zl" data-i="zm_shma_mga">סוף זמן ק״ש <small>מג״א</small></span><bdi class="zt"></bdi></li>
+      <li data-z="shmaGra"><span class="zl" data-i="zm_shma_gra">סוף זמן ק״ש <small>גר״א</small></span><bdi class="zt"></bdi></li>
+      <li data-z="tfila"><span class="zl" data-i="zm_tfila">סוף זמן תפילה <small>גר״א</small></span><bdi class="zt"></bdi></li>
+      <li data-z="chatzos"><span class="zl" data-i="zm_chatzos">חצות</span><bdi class="zt"></bdi></li>
+      <li data-z="candles" class="zm-sp" hidden><span class="zl" data-i="zm_candles">הדלקת נרות</span><bdi class="zt"></bdi></li>
+      <li data-z="shkia"><span class="zl" data-i="zm_shkia">שקיעה</span><bdi class="zt"></bdi></li>
+      <li data-z="tzeis"><span class="zl" data-i="zm_tzeis">צאת הכוכבים</span><bdi class="zt"></bdi></li>
+      <li data-z="motzei" class="zm-sp" hidden><span class="zl" data-i="zm_motzei">מוצאי שבת</span><bdi class="zt"></bdi></li>
+      <li data-z="rt" class="zm-sp" hidden><span class="zl" data-i="zm_rt">ר״ת</span><bdi class="zt"></bdi></li>
+    </ul>
+  </div>
+</section>
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-frame">
+    <span class="corner c1"></span><span class="corner c2"></span><span class="corner c3"></span><span class="corner c4"></span>
+    <p class="bsd">בס״ד</p>
+    <img class="hero-crown" src="img/crown.webp" alt="קרוין פון חסידות דאבליטשין" data-i-alt="a_crown">
+    <p class="hero-pre" data-i="hero_pre">תחת נשיאות הרה״צ רבי אברהם קויפמאן שליט״א, דער דאבליטשינער רבי</p>
+    <h1 data-i="hero_h1">מוסדות<br><span>דאבליטשין</span></h1>
+    <div class="orn" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M0 12h92M148 12h92" stroke="currentColor" stroke-width="1.2"/><path d="M120 2l10 10-10 10-10-10z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="120" cy="12" r="3" fill="currentColor"/><circle cx="100" cy="12" r="2" fill="currentColor"/><circle cx="140" cy="12" r="2" fill="currentColor"/></svg></div>
+    <p class="hero-line" data-i="hero_line">תורה, יראת שמים און חסידות — פון דור צו דור</p>
+    <div class="hero-btns">
+      <a class="btn gold" href="#donate" data-i="hero_b1">שטיצט די מוסדות</a>
+      <a class="btn ghost" href="#mosdos" data-i="hero_b2">די מוסדות</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div>
+      <p class="kicker" data-i="ab_k">וועגן אונז</p>
+      <h2 data-i="ab_h">א הויז פון תורה און חסידות</h2>
+      <p data-i="ab_p1">מוסדות דאבליטשין זענען געגרינדעט געווארן מיט איין ציל: אויפצושטעלן א דור פון בני תורה און יראי שמים, אויפגעצויגן אויפ׳ן דרך פון די הייליגע רבותינו זי״ע.</p>
+      <p data-i="ab_p2">חסידות דאבליטשין שטאמט פון א שושלת פון צדיקים וואס האבן אוועקגעגעבן זייער לעבן פאר הרבצת תורה און חיזוק היהדות. די הייליגע מסורה פון תפילה בהתלהבות, אהבת ישראל און לימוד התורה מיט התמדה ווערט איבערגעגעבן פון דור צו דור.</p>
+      <p data-i="ab_p3">היינט, אונטער דער הנהגה פון הרה״צ רבי אברהם קויפמאן שליט״א, וואקסן די מוסדות פון יאר צו יאר. תלמידים פון קליין ביז גרויס לערנען מיט מסירות נפש פון די מלמדים און רבי׳ס, אין א ווארעמע חסידישע אטמאספערע — וואו יעדער קינד ווערט געזען, און יעדער בחור וואקסט.</p>
+    </div>
+    <figure class="quote">
+      <span class="qmark" aria-hidden="true">״</span>
+      <blockquote lang="he" dir="rtl">והעמידו תלמידים הרבה</blockquote>
+      <figcaption data-i="ab_q">אבות א׳, א׳</figcaption>
+    </figure>
+  </div>
+  <div class="wrap stats">
+    <div><b>850+</b><span data-i="st1">תלמידים</span></div>
+    <div><b>65</b><span data-i="st2">מלמדים און רבי׳ס</span></div>
+    <div><b>7</b><span data-i="st3">מוסדות</span></div>
+    <div><b data-i="st4b">תשס״ח</b><span data-i="st4">געגרינדעט</span></div>
+  </div>
+</section>
+
+<section class="rebbe" id="rebbe">
+  <div class="wrap rebbe-in">
+    <div class="monogram" aria-hidden="true">
+      <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 5"/><circle cx="100" cy="100" r="76" fill="none" stroke="currentColor" stroke-width="1.5"/><g fill="currentColor"><path d="M100 4l5 8h-10z"/><path d="M100 196l5-8h-10z"/><path d="M4 100l8 5v-10z"/><path d="M196 100l-8 5v-10z"/></g></svg>
+      <img src="img/crown.webp" alt="">
+    </div>
+    <div class="rebbe-t">
+      <p class="kicker light" data-i="rb_k">נשיא המוסדות</p>
+      <h2 class="light" data-i="rb_h">הרה״צ רבי אברהם קויפמאן שליט״א</h2>
+      <p class="rebbe-name" data-i="rb_n">דער דאבליטשינער רבי · <bdi dir="ltr">Rabbi Avrohom Kaufman</bdi></p>
+      <p data-i="rb_p1">כ״ק מרן הרה״צ רבי אברהם קויפמאן שליט״א, דער דאבליטשינער רבי, איז א גרויסער צדיק, א קדוש וטהור, וועמענס גאנצע לעבן איז געווידמעט צו תורה, עבודה און גמילות חסדים.</p>
+      <p data-i="rb_p2">שוין פון זיינע יונגע יארן איז דער רבי שליט״א געווען באקאנט מיט זיין עצומע התמדה. טאג און נאכט איז ער געזעסן איבער די ספרים הקדושים, און זיין קול תורה האט זיך געהערט ביז שפעט אין די נאכט אריין. זיין תפילה איז מיט א פייער און א התלהבות וואס רייסט מיט יעדן איינעם וואס שטייט דערביי.</p>
+      <p data-i="rb_p3">מיט זיין גרויסע אהבת ישראל איז זיין טיר אפן פאר יעדן איד — גרויס און קליין, נאענט און ווייט. מענטשן קומען פון נאענט און ווייט פאר א גוטן ווארט, אן עצה טובה און א ברכה, און ווערן אויפגעמונטערט און געשטארקט.</p>
+      <p data-i="rb_p4">מיט זיין הייליגע הנהגה האט דער רבי שליט״א אויפגעבויט די מוסדות דאבליטשין, און ער פירט זיי מיט חכמה, מיט אהבה און מיט א טרייע הארץ פאר יעדן תלמיד. יהי רצון אז ער זאל פירן זיין עדה לאורך ימים ושנים טובות, מתוך בריאות הגוף ונחת דקדושה.</p>
+    </div>
+  </div>
+</section>
+
+<section class="vort" id="vort">
+  <div class="wrap">
+    <p class="kicker" data-i="vt_k">דבר תורה מכ״ק מרן אדמו״ר שליט״א</p>
+    <h2 data-i="vt_h">פרשת לך לך</h2>
+    <article class="vort-card">
+      <div class="vort-open" aria-hidden="true"><span data-i="vt_open">לך לך</span></div>
+      <p class="vort-pasuk" data-i="vt_ps">״וַיֹּאמֶר ה׳ אֶל אַבְרָם לֶךְ לְךָ מֵאַרְצְךָ וּמִמּוֹלַדְתְּךָ וּמִבֵּית אָבִיךָ אֶל הָאָרֶץ אֲשֶׁר אַרְאֶךָּ״ <small>(בראשית י״ב, א׳)</small></p>
+      <div class="vort-body">
+        <p data-i="vt_p1">פרעגט מען: פארוואס זאגט דער אייבערשטער ״לך לך״ — ״גיי צו דיר״? עס וואלט געקענט שטיין נאר ״לך״, גיי. רש״י הקדוש איז מפרש: ״להנאתך ולטובתך״ — עס איז פאר דיין אייגענע טובה.</p>
+        <p data-i="vt_p2">אבער אין די ווערטער ליגט א טיפערע כוונה פאר יעדן איד אין יעדן דור. ״מארצך״ — ארויסגיין פון די ארציות׳דיגע תאוות; ״וממולדתך״ — פון די טבעים מיט וועלכע מען איז געבוירן; ״ומבית אביך״ — פון די הרגלים צו וועלכע מען האט זיך צוגעוואוינט. און וואוהין גייט מען? ״לך לך״ — צו זיך אליין, צום אמת׳ן ״איך״, צו דער נשמה וואס איז א חלק אלוקה ממעל.</p>
+        <p data-i="vt_p3">און דאס איז ״אל הארץ אשר אראך״: דער מענטש ווייסט נישט פון פריער וואו דער וועג פירט. ער דארף נאר מאכן דעם ערשטן טריט, און דער אייבערשטער ווייזט אים שוין ווייטער דעם וועג.</p>
+        <p data-i="vt_p4">דערפאר שטייט גלייך דערנאך: ״ואעשך לגוי גדול ואברכך ואגדלה שמך והיה ברכה״ — ווען א איד גייט צו זיך אליין, ווערט ער באמת גרויס, און ער ווערט א ברכה פאר דער גאנצער וועלט.</p>
+      </div>
+      <p class="vort-src" data-i="vt_src">— כ״ק מרן אדמו״ר שליט״א · לשבת קודש פרשת לך לך תשפ״ז</p>
+    </article>
+  </div>
+</section>
+
+<section class="hanhala" id="hanhala">
+  <div class="wrap">
+    <p class="kicker" data-i="hn_k">הנהלת המוסדות</p>
+    <h2 data-i="hn_h">די הנהלה</h2>
+    <div class="hn-top">
+      <div class="hn-crown" aria-hidden="true"><img src="img/crown-sm.png" alt=""></div>
+      <p class="hn-role" data-i="hn_tr">נשיא המוסדות</p>
+      <h3 data-i="hn_tt">כ״ק מרן אדמו״ר מדאבליטשין שליט״א</h3>
+      <p class="hn-sub" data-i="hn_tn">כבוד קדושת אדונינו מורינו ורבינו עטרת ראשינו שליט״א</p>
+    </div>
+    <div class="hn-grid">
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">ד״א</span><p class="hn-role" data-i="hn0r">ראש הישיבה</p><h3 data-i="hn0n">הגה״צ ר׳ דוב אריה זילבערמאן שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">ש״ד</span><p class="hn-role" data-i="hn1r">ראש הכולל</p><h3 data-i="hn1n">הרה״ג רבי שמואל דוד ראזענבערג שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">א״ל</span><p class="hn-role" data-i="hn2r">מנהל רוחני</p><h3 data-i="hn2n">הרה״ג רבי אליעזר ליפא שטערן שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">י״ח</span><p class="hn-role" data-i="hn3r">מנהל התלמוד תורה</p><h3 data-i="hn3n">הרב יוסף חיים בערגער שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">מ״מ</span><p class="hn-role" data-i="hn4r">משגיח</p><h3 data-i="hn4n">הרה״ח רבי מנחם מענדל קליין שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">י״י</span><p class="hn-role" data-i="hn5r">גבאי ראשי דכ״ק מרן אדמו״ר שליט״א</p><h3 data-i="hn5n">הרה״ח ר׳ יעקב יוסף ברויער הי״ו</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">ח״ב</span><p class="hn-role" data-i="hn9r">ראש הקהל</p><h3 data-i="hn9n">הרה״ח ר׳ חיים בייער הי״ו</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">כ״ק</span><p class="hn-role" data-i="hn6r">מנהל כללי</p><h3 data-i="hn6n">הגאון הצדיק בן של כ״ק מרן אדמו״ר שליט״א</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">ד״א</span><p class="hn-role" data-i="hn7r">גזבר</p><h3 data-i="hn7n">ר׳ דוד אליהו הירש הי״ו</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">א״מ</span><p class="hn-role" data-i="hn11r">אדמיניסטראטאר</p><h3 data-i="hn11n">ר׳ אלי מעהרעל הי״ו</h3></article>
+      <article class="hn-card"><span class="hn-seal" aria-hidden="true">א״ח</span><p class="hn-role" data-i="hn10r">מתנגד</p><h3 data-i="hn10n">אלע חסידים וואס האלטן נישט פון די מוסדות</h3></article>
+    </div>
+  </div>
+</section>
+
+<section class="mosdos" id="mosdos">
+  <div class="wrap">
+    <p class="kicker light" data-i="ms_k">די מוסדות</p>
+    <h2 class="light" data-i="ms_h">פון תלמוד תורה ביז כולל</h2>
+    <div class="cards">
+      <article class="card has-img"><img class="card-img" src="img/bld-tt.jpg" data-i-alt="a_tt" alt="בנין תלמוד תורה קימחא דאברהם דאבליטשין" loading="lazy"><span class="medal">ת״ת</span><h3 data-i="c_tt">תלמוד תורה</h3><p data-i="c_tt_p">חינוך פון די קליינע קינדער: אלף־בית, חומש און גמרא — מיט ליבשאפט און געדולד.</p></article>
+      <article class="card has-img"><img class="card-img" src="img/bld-yk.jpg" data-i-alt="a_yk" alt="בנין ישיבה קטנה קימחא דאברהם דאבליטשין" loading="lazy"><span class="medal">י״ק</span><h3 data-i="c_yk">ישיבה קטנה</h3><p data-i="c_yk_p">בחורים לערנען גמרא בעיון און בבקיאות, און וואקסן אין יראת שמים און מידות טובות.</p></article>
+      <article class="card has-img"><img class="card-img" src="img/bld-yg.jpg" data-i-alt="a_yg" alt="בנין ישיבה גדולה קימחא דאברהם דאבליטשין" loading="lazy"><span class="medal">י״ג</span><h3 data-i="c_yg">ישיבה גדולה</h3><p data-i="c_yg_p">א מקום תורה פאר עלטערע בחורים, מיט שיעורים, חבורות און א חסידישע ווארעמקייט.</p></article>
+      <article class="card has-img"><img class="card-img" src="img/bld-kollel.jpg" data-i-alt="a_kl" alt="בנין כולל אברכים קימחא דאברהם דאבליטשין" loading="lazy"><span class="medal">כולל</span><h3 data-i="c_kl">כולל אברכים</h3><p data-i="c_kl_p">יונגעלייט זיצן און לערנען מיט התמדה, מיט סדרים פון פרי ביז שפעט.</p></article>
+      <article class="card has-img"><img class="card-img" src="img/logo-gemach.jpg" alt="" loading="lazy"><span class="medal">גמ״ח</span><h3 data-i="c_gm">גמילות חסדים</h3><p data-i="c_gm_p">הלוואות אן ריבית פאר משפחות אין א שווערע צייט — שטיל, מיט כבוד, און מיט א ווארעם הארץ.</p></article>
+      <article class="card has-img"><img class="card-img" src="img/logo-hk.jpg" alt="" loading="lazy"><span class="medal">הכ״כ</span><h3 data-i="c_hk">הכנסת כלה</h3><p data-i="c_hk_p">שטיצע פאר יתומים און ארעמע משפחות אז זיי זאלן קענען חתונה מאכן זייערע קינדער בכבוד.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <p class="kicker" data-i="gl_k">גאלעריע</p>
+    <h2 data-i="gl_h">בילדער פון די מוסדות</h2>
+    <div class="g-grid">
+      <figure class="g-item"><button type="button" class="g-open" data-full="img/gallery-1.jpg"><img src="img/gallery-1-sm.jpg" alt="בית המדרש הגדול" data-i-alt="g1" loading="lazy" width="600" height="400"></button><figcaption data-i="g1">בית המדרש הגדול</figcaption></figure>
+      <figure class="g-item"><button type="button" class="g-open" data-full="img/gallery-2.jpg"><img src="img/gallery-2-sm.jpg" alt="די ספרים אין בית המדרש" data-i-alt="g2" loading="lazy" width="600" height="400"></button><figcaption data-i="g2">די ספרים אין בית המדרש</figcaption></figure>
+      <figure class="g-item"><button type="button" class="g-open" data-full="img/gallery-4.jpg"><img src="img/gallery-4-sm.jpg" alt="א סדר לימוד אין כולל" data-i-alt="g4" loading="lazy" width="600" height="400"></button><figcaption data-i="g4">א סדר לימוד אין כולל</figcaption></figure>
+      <figure class="g-item"><button type="button" class="g-open" data-full="img/gallery-5.jpg"><img src="img/gallery-5-sm.jpg" alt="דער זאל, גרייט צום יערליכן דינער" data-i-alt="g5" loading="lazy" width="600" height="400"></button><figcaption data-i="g5">דער זאל, גרייט צום יערליכן דינער</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="dedic" id="dedications">
+  <div class="wrap">
+    <p class="kicker light" data-i="dd_k">נדבת לב</p>
+    <h2 class="light" data-i="dd_h">נדבות</h2>
+    <p class="dd-lead" data-i="dd_lead">ווערט א שותף אין די זכיות פון די מוסדות. יעדע נדבה ווערט אויסגערופן אין בית המדרש, און דער נדבן ווערט דערמאנט ביי די סדרים.</p>
+    <div class="tiers">
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$180</bdi></p><h3 data-i="t0">יום לימוד בכולל</h3><p data-i="t0p">דער גאנצער כולל לערנט א פולן טאג לזכות אייער משפחה.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$360</bdi></p><h3 data-i="t1">סדר לימוד</h3><p data-i="t1p">א פולער סדר לימוד אין בית המדרש — לעילוי נשמת, אדער לרפואה שלימה.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$720</bdi></p><h3 data-i="t2">שבוע לימוד</h3><p data-i="t2p">א גאנצע וואך לימוד אין כולל, געווידמעט אויף אייער נאמען.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$1,000</bdi></p><h3 data-i="t3">ספרים פארן בית המדרש</h3><p data-i="t3p">א סעט ספרים פארן בית המדרש, מיט אייער נאמען אין יעדן ספר.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$1,800</bdi></p><h3 data-i="t4">א חדר אין בנין</h3><p data-i="t4p">א שיעור־צימער אין בנין המוסדות, מיט א שילד אויף אייער נאמען.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$2,600</bdi></p><h3 data-i="t5">חודש לימוד</h3><p data-i="t5p">א פולער חודש לימוד אין כולל, מיט א מי שברך יעדן שבת קודש.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier feat"><p class="t-amt"><bdi dir="ltr">$3,600</bdi></p><h3 data-i="t6">שותף בכל המוסדות</h3><p data-i="t6p">א חלק אין אלע זיבן מוסדות פאר א גאנץ יאר, מיט א ברכה פון כ״ק מרן שליט״א.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+      <article class="tier"><p class="t-amt"><bdi dir="ltr">$10,000</bdi></p><h3 data-i="t7">עמוד התורה — ארון הקודש</h3><p data-i="t7p">דער ארון הקודש אין בית המדרש הגדול, געווידמעט אויף אייער נאמען לדורות.</p><button type="button" class="t-btn js-give" data-i="t_btn">ספאנסער</button></article>
+    </div>
+  </div>
+</section>
+<section class="donate" id="donate">
+  <div class="wrap donate-box">
+    <div class="orn small" aria-hidden="true"><svg viewBox="0 0 240 24"><path d="M0 12h92M148 12h92" stroke="currentColor" stroke-width="1.2"/><path d="M120 2l10 10-10 10-10-10z" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="120" cy="12" r="3" fill="currentColor"/></svg></div>
+    <h2 data-i="dn_h">שטיצט די מוסדות</h2>
+    <p class="lead" data-i="dn_lead">יעדע נדבה האלט אויף תורה. ווערט א שותף אין די זכיות פון יעדן בלאט גמרא וואס ווערט געלערנט אין די מוסדות.</p>
+    <a class="btn gold big" href="#" id="giveBtn" data-i="dn_btn">גיט א נדבה</a>
+    <p class="small-print" data-i="dn_sp">פאר נדבות און פראגעס, שרייבט צו: <a href="mailto:bigrabbiofdublitchin@gmail.com?subject=%D7%A0%D7%93%D7%91%D7%94%20%D7%A4%D7%90%D7%A8%20%D7%9E%D7%95%D7%A1%D7%93%D7%95%D7%AA%20%D7%93%D7%90%D7%91%D7%9C%D7%99%D7%98%D7%A9%D7%99%D7%9F"><bdi dir="ltr">bigrabbiofdublitchin@gmail.com</bdi></a></p>
+  </div>
+</section>
+
+<section class="news" id="news">
+  <div class="wrap">
+    <p class="kicker" data-i="nw_k">נייעס און מעלדונגען</p>
+    <h2 data-i="nw_h">וואס טוט זיך</h2>
+    <div class="news-list">
+      <article class="item"><time data-i="nw0d">חשון תשפ״ז</time><h3 data-i="nw0">הכנסת ספר תורה לכבוד די מוסדות</h3><p data-i="nw0p">מיט גרויס שמחה און התרוממות איז אריינגעברענגט געווארן א נייע ספר תורה אין בית המדרש, באגלייט מיט ניגונים און ריקודים אין בייזיין פון דעם רבי׳ן שליט״א.</p></article>
+      <article class="item"><time data-i="nw1d">תשרי תשפ״ז</time><h3 data-i="nw1">ימים נוראים און סוכות אין חצר הקודש</h3><p data-i="nw1p">טויזנטער חסידים זענען געקומען זיך מתפלל זיין מיט דעם רבי׳ן שליט״א אין די הייליגע טעג, און זיך משתתף געווען ביי די טישן און שמחת בית השואבה.</p></article>
+      <article class="item"><time data-i="nw2d">אלול תשפ״ו</time><h3 data-i="nw2">שבת התאחדות פאר אלע תלמידים</h3><p data-i="nw2p">די תלמידים פון אלע מוסדות האבן זיך פארזאמלט אויף א שבת התאחדות מיט טישן, שיעורים און א ספעציעלע שמועס פון דעם רבי׳ן שליט״א פאר׳ן נייעם זמן.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="ask" id="ask">
+  <div class="wrap ask-in">
+    <p class="kicker" data-i="ak_k">שאלות לכ״ק מרן אדמו״ר</p>
+    <h2 data-i="ak_h">פרעגט דעם רבי׳ן</h2>
+    <p class="lead" data-i="ak_lead">האט איר א שאלה, א בקשה פאר אן עצה טובה אדער א ברכה? שרייבט עס דא אריין, און עס וועט געברענגט ווערן צו כ״ק מרן אדמו״ר שליט״א.</p>
+    <div class="ask-thanks" id="ask-thanks" hidden><span class="ask-tick" aria-hidden="true">✓</span><p data-i="ak_ty">די שאלה איז אנגעקומען, מען וועט ענטפערן אי״ה</p></div>
+    <form class="ask-form" action="https://formsubmit.co/bigrabbiofdublitchin@gmail.com" method="POST">
+      <input type="hidden" name="_subject" value="שאלה פאר דעם רבי'ן – דאבליטשין">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://dublitchin.surge.sh/#ask-thanks">
+      <input type="text" name="_honey" class="ask-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="ask-row">
+        <label><span data-i="ak_name">נאמען <small>(נישט מוז)</small></span><input type="text" name="name" autocomplete="name"></label>
+        <label><span data-i="ak_mail">אימעיל</span><input type="email" name="email" autocomplete="email" dir="ltr" required></label>
+      </div>
+      <label><span data-i="ak_q">אייער שאלה</span><textarea name="question" rows="6" required></textarea></label>
+      <p class="ask-note" data-i="ak_note">כדי צו באקומען אן ענטפער, לאזט איבער אן אימעיל.</p>
+      <button type="submit" class="btn gold big" data-i="ak_btn">שיקן</button>
+    </form>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <p class="kicker light" data-i="ct_k">קאנטאקט</p>
+    <h2 class="light" data-i="ct_h">פארבינדט זיך מיט אונז</h2>
+    <div class="contact-grid">
+      <div class="ci"><span data-i="ct_a">אדרעס</span><b data-i="ct_av">1000 דאבליטשין עוועניו</b><small class="yi-only" dir="ltr">1000 Dublitchin Avenue</small></div>
+      <div class="ci"><span data-i="ct_p">טעלעפאן</span><b><a href="tel:+19143938555" dir="ltr">914-393-8555</a></b></div>
+      <div class="ci ci-mail"><span data-i="ct_e">אימעיל</span><b><a href="mailto:haravhatzadikshlita@gmail.com" dir="ltr">haravhatzadikshlita@gmail.com</a></b><b><a href="mailto:bigrabbiofdublitchin@gmail.com" dir="ltr">bigrabbiofdublitchin@gmail.com</a></b></div>
+      <div class="ci"><span data-i="ct_o">אפיס שעות</span><b data-i="ct_ov">זונטאג – דאנערשטאג</b><small dir="ltr">10:00 AM – 5:00 PM</small></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img class="foot-crown" src="img/crown-sm.png" alt="" width="84">
+    <p class="foot-name" data-i="ft_n">מוסדות דאבליטשין</p>
+    <p data-i="ft_l">תחת נשיאות הרה״צ רבי אברהם קויפמאן שליט״א</p>
+    <p><span data-i="ct_av">1000 דאבליטשין עוועניו</span> · <a href="tel:+19143938555" dir="ltr">914-393-8555</a></p>
+    <p class="copy" data-i="ft_c">© תשפ״ז · כל הזכויות שמורות</p>
+    <a class="adm-open" href="#admin" aria-label="Admin" rel="nofollow">🔒</a>
+  </div>
+</footer>
+
+<div id="giveModal" style="display:none;position:fixed;inset:0;background:rgba(8,12,28,.82);z-index:9999;align-items:center;justify-content:center;padding:20px">
+ <div id="gBox" style="background:#fff;color:#0E1630;max-width:420px;width:100%;border-radius:14px;padding:24px 22px;border-top:6px solid #b8862f;font-family:Heebo,sans-serif;text-align:center;direction:rtl">
+  <p id="gTier" style="display:none;margin:0 0 12px;padding:8px 10px;background:#f7f1e3;border:1px solid #e3cf9a;border-radius:8px;font-weight:700;color:#5e1625"></p>
+  <div id="gStep1">
+   <h3 data-i="m_h1" style="margin:0 0 12px;font-size:22px">⚠️ וויכטיג – ביטע לייענט</h3>
+   <p data-i="m_w1" style="margin:0 0 8px;line-height:1.6">דאס איז <b>נישט קיין אמת'דיגע ארגאניזאציע</b>. עס איז א שפאס-וועבזייטל פון אברמי פאר חברים.</p>
+   <p data-i="m_w2" style="margin:0 0 8px;line-height:1.6">יעדע געלט וואס איר שיקט גייט <b>גלייך צו אברמי קויפמאן פערזענליך</b>. עס איז נישט קיין צדקה און נישט טעקס-דידאקטעבל.</p>
+   <p class="yi-only" dir="ltr" style="margin:0 0 16px;font-size:13px;color:#555;line-height:1.5">This is NOT a real organization. It is a fun site by Avrumy for friends. Any money goes directly to Avrumy Kaufman personally. Not charity, not tax-deductible.</p>
+   <button id="gYes" data-i="m_yes" style="background:#b8862f;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-size:16px;margin:4px;cursor:pointer">איך פארשטיי, ווייטער</button>
+   <button class="gNo" data-i="m_back" style="background:#eee;color:#0E1630;border:0;border-radius:8px;padding:12px 18px;font-size:16px;margin:4px;cursor:pointer">צוריק</button>
+  </div>
+  <div id="gStep2" style="display:none">
+   <h3 data-i="m_h2" style="margin:0 0 12px;font-size:22px">שיקט צו אברמי</h3>
+   <p dir="ltr" style="margin:0 0 6px">Zelle:</p>
+   <p dir="ltr" style="margin:0 0 10px;font-size:18px;font-weight:700;word-break:break-all">avrumy48@gmail.com</p>
+   <button id="gCopy" data-i="m_copy" style="background:#b8862f;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-size:16px;margin:0 4px 12px;cursor:pointer">קאפירן</button>
+   <p data-i="m_how" style="margin:0 0 14px;font-size:13px;color:#555">עפנט אייער באנק אפ → Zelle → פעיסט</p>
+   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=avrumy48%40gmail.com&amp;item_name=Gift+to+Avrumy+%28not+charity%29&amp;currency_code=USD" target="_blank" rel="noopener" style="display:inline-block;background:#003087;color:#fff;text-decoration:none;border-radius:8px;padding:12px 22px;font-size:16px;font-weight:700;margin:0 0 14px" data-i="m_pp">PayPal ←</a><br>
+   <button class="gNo" style="background:#eee;color:#0E1630;border:0;border-radius:8px;padding:12px 18px;font-size:16px;cursor:pointer" data-i="m_close">פארמאכן</button>
+  </div>
+ </div>
+</div>
+<script>
+(function(){var m=document.getElementById('giveModal'),b=document.getElementById('giveBtn');if(!m)return;
+function T(k,d){return (window.dubT&&window.dubT(k))||d;}
+window.openGive=function(tier){var t=document.getElementById('gTier');if(tier){t.textContent=tier;t.style.display='';}else{t.textContent='';t.style.display='none';}
+var gc=document.getElementById('gCopy');if(gc)gc.textContent=T('m_copy','קאפירן');
+document.getElementById('gStep1').style.display='';document.getElementById('gStep2').style.display='none';m.style.display='flex';};
+if(b)b.addEventListener('click',function(e){e.preventDefault();window.openGive();});
+document.querySelectorAll('.js-give').forEach(function(x){x.addEventListener('click',function(e){e.preventDefault();var c=x.closest('.tier');var lbl=c?(c.querySelector('h3').textContent+' · '+c.querySelector('.t-amt').textContent):'';window.openGive(lbl);});});
+var gc=document.getElementById('gCopy');if(gc)gc.onclick=function(){var t='avrumy48@gmail.com',done=function(){gc.textContent=T('m_copied','✓ קאפירט');};(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(done).catch(function(){var i=document.createElement('input');i.value=t;document.body.appendChild(i);i.select();document.execCommand('copy');i.remove();done();});};
+document.getElementById('gYes').onclick=function(){document.getElementById('gStep1').style.display='none';document.getElementById('gStep2').style.display='';};
+m.querySelectorAll('.gNo').forEach(function(x){x.onclick=function(){m.style.display='none';};});
+m.addEventListener('click',function(e){if(e.target===m)m.style.display='none';});})();
+</script>
+<div id="lb" class="lb" hidden>
+ <button type="button" class="lb-x" aria-label="×">×</button>
+ <button type="button" class="lb-nav lb-prev" aria-label="‹">‹</button>
+ <figure class="lb-fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+ <button type="button" class="lb-nav lb-next" aria-label="›">›</button>
+</div>
+<script src="i18n.js?v=adm2"></script>
+<script src="site.js?v=adm2"></script>
+<script src="admin.js?v=adm2"></script>
+<script src="zmanim.js"></script>
+<script data-goatcounter="https://dublitchin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
