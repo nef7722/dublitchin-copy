@@ -23,9 +23,17 @@ ap.add_argument('--sun', type=float, default=2.4)
 ap.add_argument('--sun_el', type=float, default=52.0)
 ap.add_argument('--sun_az', type=float, default=-38.0)
 ap.add_argument('--exp', type=float, default=-0.35)
+ap.add_argument('--eye', default='')
+ap.add_argument('--outdir', default='out/pano')
+ap.add_argument('--sky', type=float, default=0.25)
+ap.add_argument('--dl', type=float, default=55.0)
+ap.add_argument('--adapt', type=float, default=0.05)
 args = ap.parse_args(sys.argv[1:])
 
 t0 = time.time()
+if args.eye:
+    os.environ['FP_H'] = '9.0'
+    os.environ['FP_EYE'] = '1'
 bpy.ops.wm.read_factory_settings(use_empty=True)
 import lib, arch, house
 lib.make_materials()
@@ -36,6 +44,12 @@ house.build_shell(coll)
 if not args.no_interior:
     import interior
     interior.build_interior(coll)
+if args.eye:
+    import eye
+    eye.build_eye(coll)
+    for o in bpy.data.objects:
+        if o.type == 'LIGHT' and o.name.startswith('dl'):
+            o.data.energy = args.dl
 objs = {}
 for b in list(lib.MB.all):
     objs[b.name] = b.finish(coll)
@@ -61,6 +75,18 @@ sun_d.color = (1.0, 0.96, 0.9)
 sun = bpy.data.objects.new('sun', sun_d)
 coll.objects.link(sun)
 sun.rotation_euler = (math.radians(90 - args.sun_el), 0, math.radians(args.sun_az))
+if args.eye:
+    N, L = world.node_tree.nodes, world.node_tree.links
+    sky = N.new('ShaderNodeTexSky')
+    sky.sky_type = 'MULTIPLE_SCATTERING'
+    try:
+        sky.sun_disc = False
+    except Exception:
+        pass
+    sky.sun_elevation = math.radians(args.sun_el)
+    sky.sun_rotation = math.radians(180 - args.sun_az)
+    L.new(sky.outputs['Color'], bg.inputs['Color'])
+    bg.inputs['Strength'].default_value = args.sky
 
 # ------------------------------------------------------------ camera
 cam_d = bpy.data.cameras.new('cam')
@@ -68,7 +94,15 @@ cam = bpy.data.objects.new('cam', cam_d)
 coll.objects.link(cam)
 scene.camera = cam
 target = Vector((args.tx, -args.ty, args.tz))
-if args.view == 'top':
+if args.eye:
+    cam_d.type = 'PANO'
+    cam_d.panorama_type = 'EQUIRECTANGULAR'
+    cam_d.clip_start = 0.05
+    cam_d.clip_end = 2000
+    cam.rotation_euler = (math.pi / 2, 0, 0)
+    rx = args.res
+    ry = args.res // 2
+elif args.view == 'top':
     cam_d.type = 'ORTHO'
     cam_d.ortho_scale = 64.0
     cam.location = Vector((21.3, -28.9, 120))
@@ -125,10 +159,33 @@ r.threads = os.cpu_count()
 scene.view_settings.view_transform = 'AgX'
 scene.view_settings.look = 'AgX - Medium High Contrast'
 scene.view_settings.exposure = args.exp
+if args.eye:
+    c.adaptive_threshold = args.adapt
+    c.max_bounces = 6
+    c.diffuse_bounces = 3
+    c.glossy_bounces = 2
+    c.transmission_bounces = 4
+    c.transparent_max_bounces = 4
+    c.sample_clamp_indirect = 4.0
+    c.use_light_tree = True
+    c.denoising_input_passes = 'RGB_ALBEDO_NORMAL'
+    c.denoising_prefilter = 'ACCURATE'
 
 if args.save:
     bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(args.save))
-r.filepath = os.path.abspath(args.out)
-t1 = time.time()
-bpy.ops.render.render(write_still=True)
-print('rendered in %.1fs -> %s' % (time.time() - t1, r.filepath))
+if args.eye:
+    import eye
+    ids = list(eye.STATIONS) if args.eye == 'all' else args.eye.split(',')
+    os.makedirs(args.outdir, exist_ok=True)
+    for sid in ids:
+        x, y, z, he, en = eye.STATIONS[sid]
+        cam.location = Vector((x, -y, z + eye.EYE))
+        r.filepath = os.path.abspath(os.path.join(args.outdir, sid + '.png'))
+        t1 = time.time()
+        bpy.ops.render.render(write_still=True)
+        print('rendered %s in %.1fs' % (sid, time.time() - t1), flush=True)
+else:
+    r.filepath = os.path.abspath(args.out)
+    t1 = time.time()
+    bpy.ops.render.render(write_still=True)
+    print('rendered in %.1fs -> %s' % (time.time() - t1, r.filepath))

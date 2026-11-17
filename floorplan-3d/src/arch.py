@@ -1,10 +1,10 @@
 # Architecture: walls, openings, floors, foundation, stairs, porch.
 # All dimensions in feet, taken from the drawing (labels honoured; unlabeled items scaled off the drawing).
-import math
+import math, os
 from mathutils import Vector, Matrix
 from lib import MB, W, Rz, T, frame_at
 
-H = 8.0        # wall cut height (ceiling is above the cut)
+H = float(os.environ.get('FP_H', '8.0'))   # wall height: 8' cut for the dollhouse views, 9' ceiling for eye level
 DH = 6.667     # door head (6'-8")
 SILL = 2.167   # window sill  (3046 / 2046 windows are 4'-6" tall, head 6'-8")
 WH = 6.667
@@ -35,6 +35,7 @@ def builders():
     B['metal'] = MB('metal', bevel=0.004, segs=1)
     B['cab'] = MB('cabinets', bevel=0.006, segs=1)
     B['ct'] = MB('countertops', bevel=0.012, segs=2)
+    B['ct2'] = MB('countertops_solid', bevel=0.012, segs=2)
     B['porch'] = MB('porch', bevel=0.01, segs=1)
     return B
 

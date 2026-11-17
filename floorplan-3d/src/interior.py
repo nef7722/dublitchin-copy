@@ -1,5 +1,5 @@
 # Interior: kitchen cabinetry & appliances, baths, built-ins and the furniture drawn on the plan.
-import bpy, bmesh, math
+import bpy, bmesh, math, os
 from mathutils import Vector, Matrix
 from lib import MB, W, Rz, T, frame_at, MATS
 from arch import B, DH
@@ -188,7 +188,10 @@ def make_faucets(coll):
         mt.rod(b + Vector((0, 0, 0.55)), b + Vector((0, 0, 0.55)) + side * 0.22 + Vector((0, 0, 0.05)), 0.025, 'nickel')
 
 
-def uppers(run, u0, u1, z0=4.5, z1=8.0, depth=1.0, mat='cab'):
+UP_TOP = 8.75 if os.environ.get('FP_EYE') else 8.0
+
+
+def uppers(run, u0, u1, z0=4.5, z1=UP_TOP, depth=1.0, mat='cab'):
     M = run.M
     cb = B['cab']
     cb.box(u0, 0, z0, u1, depth - 0.06, z1 - 0.19, mat, M)
@@ -202,7 +205,7 @@ def uppers(run, u0, u1, z0=4.5, z1=8.0, depth=1.0, mat='cab'):
     cb.box(u0, 0, z0 - 0.06, u1, depth, z0, mat, M)
 
 
-def hood(run, u0, u1, z0=5.3, z1=8.0, mat='cab'):
+def hood(run, u0, u1, z0=5.3, z1=UP_TOP, mat='cab'):
     M = run.M
     cb = B['cab']
     cb.box(u0 - 0.15, 0, z0, u1 + 0.15, 1.75, z0 + 0.6, mat, M)
@@ -214,7 +217,7 @@ def hood(run, u0, u1, z0=5.3, z1=8.0, mat='cab'):
 
 
 def backsplash(x0, y0, x1, y1, z0=3.0, z1=4.5):
-    B['fine'].pbox(x0, y0, x1, y1, z0, z1, 'subway')
+    B['fine'].pbox(x0, y0, x1, y1, z0, z1, 'subway_yz' if (x1 - x0) < (y1 - y0) else 'subway_xz')
 
 
 # ------------------------------------------------------------------ kitchen
@@ -259,7 +262,7 @@ def kitchen():
     sink_cut(k3, (s_s[0] + s_s[1]) / 2, 1.0, 2.0, 1.45)
     faucet(k3.world((s_s[0] + s_s[1]) / 2, 0.22, 3.0), k3.F)
     # raised bar tops on the half walls
-    ct = B['ct']
+    ct = B['ct2']
     ct.pbox(10.38, 15.22, 22.42, 15.95, 3.5, 3.62, 'quartz')
     ct.pbox(21.72, 15.95, 22.42, 25.0, 3.5, 3.62, 'quartz')
 
@@ -532,6 +535,7 @@ def build_interior(coll):
 
 
 def apply_cuts(ct_obj, coll):
+    """Sink holes; self-intersection mode because the countertop pieces touch each other."""
     for i, (pts, z0, z1) in enumerate(CT_CUTS):
         cm = MB('ctcut%d' % i)
         cm.prism(pts, z0, z1, 'quartz')
@@ -542,4 +546,6 @@ def apply_cuts(ct_obj, coll):
         mod = ct_obj.modifiers.new('cut%d' % i, 'BOOLEAN')
         mod.operation = 'DIFFERENCE'
         mod.solver = 'EXACT'
+        mod.use_self = True
+        mod.use_hole_tolerant = True
         mod.object = co

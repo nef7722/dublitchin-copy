@@ -1,7 +1,7 @@
 # Core helpers: mesh builder, plan<->world conversion, materials.
 # Units: 1 Blender unit = 1 foot. Plan coords: x = east (right on drawing), y = south (down on drawing).
 # World: X = x, Y = -y, Z up. Finished floor level = 0.
-import bpy, bmesh, math
+import bpy, bmesh, math, os
 from mathutils import Vector, Matrix
 
 MATS = {}
@@ -29,6 +29,14 @@ def frame_at(px, py, face_dx, face_dy, z=0.0):
 class MB:
     """Accumulating mesh builder with per-face materials."""
     all = []
+    REC = None   # when a list: every box / prism footprint is recorded (for walk collision maps)
+
+    def _rec(self, pts3, m):
+        if MB.REC is None:
+            return
+        if isinstance(m, dict):
+            m = m.get('z+', m.get('all'))
+        MB.REC.append((self.name, m, [(p[0], p[1]) for p in pts3], min(p[2] for p in pts3), max(p[2] for p in pts3)))
 
     def __init__(self, name, bevel=0.0, segs=2, angle=40):
         self.name = name
@@ -60,6 +68,7 @@ class MB:
              (X0, Y0, Z1), (X1, Y0, Z1), (X1, Y1, Z1), (X0, Y1, Z1)]
         if M is not None:
             c = [M @ Vector(p) for p in c]
+        self._rec(c, m)
         v = [self.bm.verts.new(p) for p in c]
         F = {'z-': (0, 3, 2, 1), 'z+': (4, 5, 6, 7), 'y-': (0, 1, 5, 4),
              'y+': (2, 3, 7, 6), 'x-': (3, 0, 4, 7), 'x+': (1, 2, 6, 5)}
@@ -84,6 +93,7 @@ class MB:
             if M is not None:
                 pb = M @ pb; pt = M @ pt
             bot.append(self.bm.verts.new(pb)); top.append(self.bm.verts.new(pt))
+        self._rec([v.co for v in bot] + [v.co for v in top], m)
         faces = []
         # orientation: compute signed area
         area = sum(pts[i][0] * pts[(i + 1) % n][1] - pts[(i + 1) % n][0] * pts[i][1] for i in range(n))
@@ -140,7 +150,7 @@ class MB:
         coll.objects.link(ob)
         for m in self.mats:
             me.materials.append(MATS[m])
-        if self.bevel > 0:
+        if self.bevel > 0 and not os.environ.get('FP_NOBEVEL'):
             mod = ob.modifiers.new('bv', 'BEVEL')
             mod.width = self.bevel
             mod.segments = self.segs
@@ -249,7 +259,7 @@ def wood_planks(name, c1, c2, mortar, plank_w=0.42, plank_l=4.5, rot=90, rough=0
     br.inputs['Row Height'].default_value = plank_w
     L.new(vec, br.inputs['Vector'])
     gv = _scale_vec(nt, vec, (0.35, 9.0, 1.0))
-    g = _noise(nt, gv, scale=3.0, detail=8, rough=0.6)
+    g = _noise(nt, gv, scale=3.0, detail=4, rough=0.6)
     gr = _ramp(nt, g, [(0.25, (1 - grain, 1 - grain, 1 - grain)), (0.75, (1.0, 1.0, 1.0))])
     col = _vmul(nt, br.outputs['Color'], gr)
     L.new(col, b.inputs['Base Color'])
@@ -257,11 +267,18 @@ def wood_planks(name, c1, c2, mortar, plank_w=0.42, plank_l=4.5, rot=90, rough=0
     return m
 
 
-def tiles(name, c1, c2, mortar, w=2.0, h=2.0, offset=0.0, rough=0.3, vein=False, rot=0, mortar_size=0.008,
+def tiles(name, c1, c2, mortar, w=2.0, h=2.0, offset=0.0, rough=0.3, vein=False, rot=0, mortar_size=0.008, plane='xy',
           noise_amt=0.06):
     m, nt, b = principled(name, c1, rough=rough)
     N, L = nt.nodes, nt.links
     vec = _geo_map(nt, rot_z=rot, loc=(0.37, 0.21, 0))
+    if plane != 'xy':
+        sep = nt.nodes.new('ShaderNodeSeparateXYZ')
+        com = nt.nodes.new('ShaderNodeCombineXYZ')
+        nt.links.new(vec, sep.inputs[0])
+        nt.links.new(sep.outputs['Y' if plane == 'yz' else 'X'], com.inputs['X'])
+        nt.links.new(sep.outputs['Z'], com.inputs['Y'])
+        vec = com.outputs[0]
     br = N.new('ShaderNodeTexBrick')
     br.offset = offset; br.offset_frequency = 2
     br.inputs['Color1'].default_value = (*c1, 1)
@@ -273,7 +290,7 @@ def tiles(name, c1, c2, mortar, w=2.0, h=2.0, offset=0.0, rough=0.3, vein=False,
     br.inputs['Row Height'].default_value = h
     L.new(vec, br.inputs['Vector'])
     col = br.outputs['Color']
-    nzf = _noise(nt, vec, scale=0.8, detail=6, rough=0.55)
+    nzf = _noise(nt, vec, scale=0.8, detail=3, rough=0.55)
     nzc = _ramp(nt, nzf, [(0.3, (1 - noise_amt,) * 3), (0.7, (1.0, 1.0, 1.0))])
     col = _vmul(nt, col, nzc)
     if vein:
@@ -281,7 +298,7 @@ def tiles(name, c1, c2, mortar, w=2.0, h=2.0, offset=0.0, rough=0.3, vein=False,
         wv.wave_type = 'BANDS'; wv.bands_direction = 'DIAGONAL'
         wv.inputs['Scale'].default_value = 0.45
         wv.inputs['Distortion'].default_value = 9.0
-        wv.inputs['Detail'].default_value = 6.0
+        wv.inputs['Detail'].default_value = 3.0
         wv.inputs['Detail Scale'].default_value = 1.2
         L.new(vec, wv.inputs['Vector'])
         vr = _ramp(nt, wv.outputs['Fac'], [(0.0, (0.78, 0.78, 0.79)), (0.035, (1, 1, 1)), (1.0, (1, 1, 1))])
@@ -294,8 +311,9 @@ def tiles(name, c1, c2, mortar, w=2.0, h=2.0, offset=0.0, rough=0.3, vein=False,
 def fabric(name, color, rough=0.95, sheen=0.35, bump=0.15):
     m, nt, b = principled(name, color, rough=rough, sheen=sheen, spec=0.3)
     vec = _geo_map(nt)
-    nz = _noise(nt, vec, scale=180.0, detail=2, rough=0.5)
-    _bump(nt, b, nz, strength=bump, dist=0.002)
+    if bump > 0 and False:
+        nz = _noise(nt, vec, scale=180.0, detail=2, rough=0.5)
+        _bump(nt, b, nz, strength=bump, dist=0.002)
     return m
 
 
@@ -303,7 +321,7 @@ def wood_solid(name, c1, c2, rough=0.4, rot=0, scale=(0.25, 12, 1)):
     m, nt, b = principled(name, c1, rough=rough, coat=0.15)
     vec = _geo_map(nt, rot_z=rot)
     gv = _scale_vec(nt, vec, scale)
-    g = _noise(nt, gv, scale=2.5, detail=10, rough=0.62)
+    g = _noise(nt, gv, scale=2.5, detail=4, rough=0.62)
     col = _ramp(nt, g, [(0.3, c2), (0.7, c1)])
     nt.links.new(col, b.inputs['Base Color'])
     return m
@@ -326,7 +344,7 @@ def siding(name, color):
 def stucco(name, color, rough=0.9):
     m, nt, b = principled(name, color, rough=rough)
     vec = _geo_map(nt)
-    nz = _noise(nt, vec, scale=6.0, detail=8, rough=0.7)
+    nz = _noise(nt, vec, scale=6.0, detail=3, rough=0.7)
     c = _ramp(nt, nz, [(0.3, tuple(x * 0.9 for x in color)), (0.7, color)])
     nt.links.new(c, b.inputs['Base Color'])
     _bump(nt, b, nz, strength=0.15, dist=0.02)
@@ -388,12 +406,12 @@ def make_materials():
     principled('frame', (0.05, 0.05, 0.05), rough=0.4)
     m, nt, b = principled('ground', (0.20, 0.30, 0.12), rough=0.95, spec=0.25)
     vec = _geo_map(nt)
-    n1 = _noise(nt, vec, scale=0.08, detail=6, rough=0.6)
+    n1 = _noise(nt, vec, scale=0.08, detail=3, rough=0.6)
     c = _ramp(nt, n1, [(0.3, (0.16, 0.25, 0.09)), (0.5, (0.22, 0.32, 0.12)), (0.7, (0.27, 0.35, 0.15))])
     n2 = _noise(nt, vec, scale=25.0, detail=2, rough=0.5)
     c2 = _ramp(nt, n2, [(0.3, (0.8, 0.8, 0.8)), (0.7, (1.0, 1.0, 1.0))])
     nt.links.new(_vmul(nt, c, c2), b.inputs['Base Color'])
-    _bump(nt, b, n2, strength=0.3, dist=0.05)
+
     principled('concrete', (0.42, 0.42, 0.41), rough=0.95)
     principled('bulb', (1, 1, 1), rough=0.5)
     glass()
@@ -406,8 +424,9 @@ def make_materials():
           offset=0.5)
     tiles('paver', (0.42, 0.45, 0.48), (0.50, 0.52, 0.53), (0.33, 0.33, 0.33), w=2.0, h=1.33, rough=0.8,
           offset=0.5)
-    tiles('subway', (0.94, 0.94, 0.93), (0.92, 0.92, 0.91), (0.78, 0.78, 0.77), w=0.5, h=0.25, rough=0.06,
-          offset=0.5, mortar_size=0.012, noise_amt=0.02)
+    for pl in ('yz', 'xz'):
+        tiles('subway_' + pl, (0.94, 0.94, 0.93), (0.92, 0.92, 0.91), (0.78, 0.78, 0.77), w=0.5, h=0.25,
+              rough=0.06, offset=0.5, mortar_size=0.012, noise_amt=0.02, plane=pl)
     fabric('sofa', (0.53, 0.50, 0.45))
     fabric('sofa_dark', (0.30, 0.31, 0.33))
     fabric('chair', (0.80, 0.76, 0.68))

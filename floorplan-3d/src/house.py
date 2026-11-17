@@ -1,5 +1,5 @@
 # The house shell: every wall, opening, floor finish, stair and the porch, taken from the plan.
-import bpy, math
+import bpy, math, os
 from mathutils import Vector
 from lib import MB, W, MATS
 from arch import (B, wall_rect, wall_seg, door_leaf, bifold, flight, balustrade, H, DH, TE, TI, G, ZB, BASE,
@@ -87,6 +87,9 @@ def floors():
     marble = [(22.167, 15.5, 36.167, 26.583), (22.167, 26.583, 25.167, 42.75), (25.167, 26.583, 30.167, 35.583),
               (25.167, 35.583, 26.5, 39.25), (25.167, 39.25, 30.0, 39.417), (28.417, 15.333, 31.75, 15.5)]
     slate = [(30.5, 26.917, 36.167, 35.583)]
+    # floor through the wall thickness at openings without a room floor under them
+    marble += [(36.167, 23.06, 36.667, 26.06), (32.75, 26.583, 35.417, 26.917)]
+    oak += [(21.833, 47.95, 22.167, 53.7)]
     for m, rs in (('oak', oak), ('tile', tile), ('marble', marble), ('slate', slate)):
         for r in rs:
             F.pbox(r[0], r[1], r[2], r[3], -0.05, 0.0, m)
@@ -190,7 +193,10 @@ def porch():
 
 def doors():
     # front door 3068 (opens in, drawn fully open along the south jamb)
-    door_leaf((36.12, 25.98), (-1, 0), 2.95, mat='front_door', panels=3)
+    walk = bool(os.environ.get('FP_WALK'))
+    # front door 3068 opens in (drawn fully open along the south jamb; the walk model keeps it at 60 degrees
+    # because fully open it stands in front of the mud room door)
+    door_leaf((36.12, 25.98), (-0.866, -0.5) if walk else (-1, 0), 2.95, mat='front_door', panels=3)
     door_leaf((32.72, 15.44), (0, -1), 2.62)                 # study 2868
     door_leaf((28.55, 15.72), (0, 1), 2.6)                    # basement stair 2868 (opens to foyer)
     door_leaf((3.95, 25.44), (0, -1), 2.28)                   # pantry 2468
@@ -200,7 +206,7 @@ def doors():
     door_leaf((25.88, 26.52), (s, -s), 1.97, knob=True)       # coat closet pair 2068
     door_leaf((29.78, 26.52), (-s, -s), 1.97, knob=True)
     door_leaf((35.37, 26.98), (0, 1), 2.62)                   # mud room 2868
-    door_leaf((25.65, 32.19), (s, -s), 1.95)                  # toilet 2068
+    door_leaf((25.65, 32.19), (0.087, -0.996) if walk else (s, -s), 1.95)   # toilet 2068
     bifold((23.2, 54.75), +1)                                 # kitchenette bifolds (2)3068
     bifold((35.13, 54.75), -1)
     # front door exterior trim + threshold
